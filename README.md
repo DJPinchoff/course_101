@@ -1,0 +1,1 @@
+This repository is to track my progress on Launch School's Course 101.
