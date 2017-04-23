@@ -50,9 +50,9 @@ loop do
   puts "Thank you for using the Mortgage/Car Payment Calculator!"
   print "Would you like to use it again? Type 'Y' or 'N'. >>> "
   input = gets.chomp
-  if input.downcase == 'n' then 
+  if input.downcase == 'n'
     puts "Goodbye!"
-    break 
+    break
   end
   puts
 end

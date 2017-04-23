@@ -7,7 +7,7 @@ en:
   operation: "What operation would you like to perform?\n=> 1) add\n=> 2) subtract\n=> 3) multiply\n=> 4) divide"
   valid_operator: "Make sure to choose 1, 2, 3, or 4."
   again: "Do you want to perform another calculation? (Y to calculate again.)"
-  goodbye: "Thank you for using the calculator!"
+  goodbye: "Thank you for using the calculator! Goodbye, "
   hi: "Hi,"
   result: "The result is "
   adding: "Adding the two numbers"
@@ -30,4 +30,3 @@ es:
   subtracting: "Sustraer los dos números"
   multiplying: "Multiplicar los dos números"
   dividing: "Dividir los dos números"
-  
