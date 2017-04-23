@@ -1,0 +1,58 @@
+inputs:
+-From user gets
+  -loan amount = p
+  -APR = a
+  -loan duration in years = d
+
+outputs:
+-Calculate
+  -monthly interest rate (APR / 12)
+  -loan duration in months = d * 12 = n
+  
+-Print to User
+  -Monthly Payment:
+    m = p * (j / (1 - (1 + j)**(-n)))
+    p = loan amount
+    j = monthly interest rate = APR / 12
+    n = loan duration in months
+    
+  -Total cost of loan:
+    m * loan duration in months
+
+-Example/Test Cases:
+  -$20,000 @ 3% APR, 5 years = $359, $21,562
+  -$100,000 & 4.2% APR, 15 years = $750, $134,955
+
+Data Structures:
+-I think we can just use clearly defined variables.
+  -Floats rounded to two decimal digits
+
+Algorithm:
+  -Get inputs from user - loop if input is not valid
+  -Calculate needed variables
+  -Print out answers
+  
+START
+  PRINT "Welcome to your Mortgage/Car Loan Payment Calculator!"
+  PRINT "Let's calculate your monthly payment and total cost..."
+  PRINT "Enter the loan amount you want to take:"
+  
+  GET input from user.to_f
+    -READ input and check to see if it is a valid number
+  IF valid number
+    SET p to loan amount
+  ELSE
+    GET input and check it again.
+  
+  Same steps as GET, IF SET, ELSE
+    APR = a
+    yearly loan duration = d
+  
+  SET monthly_interest_rate = j = a / 12
+  SET loan_duration_in_months = n = d * 12
+  # Remember p is loan amount
+  SET m = p * (j / (1 - (1 + j)**(-n)))
+  PRINT "Your monthly loan payment is $#{m}. And your total cost is $#{m * n}."
+
+  
+  
