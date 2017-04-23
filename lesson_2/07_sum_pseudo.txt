@@ -1,0 +1,14 @@
+A method that returns the sum of two integers...
+
+INFORMAL PSEUDO CODE: 
+Create method that takes two integer arguments
+  -Add them together
+  -Return the value
+
+FORMAL PSEUDO CODE:
+START
+SET def of sum method with two arguments
+  READ argument1 and argument2
+  SET answer to the two arguments added together
+  PRINT or return the answer
+END

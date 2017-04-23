@@ -1,0 +1,17 @@
+A method that takes an array of strings, and returns a string that is all those strings concatenated together.
+
+INFORMAL PSEUDO CODE:
+Create the method statement with one argument for an array of strings.
+  -Use some code to join each element of array together through concatination
+  -Return the string with the array all together
+
+FORMAL PSEUDO CODE:
+
+START
+
+SET def of concat method with one argument, an array of strings
+  READ array argument
+  SET new string to array.join
+  PRINT new string
+
+END

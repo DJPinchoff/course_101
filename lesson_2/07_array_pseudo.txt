@@ -1,0 +1,22 @@
+A method that takes an array of integers, and returns a new array with every other element
+
+INFORMAL PSEUDO CODE:
+
+-Define a method called every_other(int_array)
+  -Create an empty answer_array 
+  -Iterate through each_index of int_array
+    -Check to see if the index is even (0, 2, 4)
+    -If it is even, then push the element at that index to answer_array
+  -After iteration, return answer_array 
+  
+  FORMAL PSEUDO CODE:
+  
+  START
+  
+  Given a method definition for every_other(int_array)
+    SET answer_array = []
+    READ each_index of int_array
+      IF index.even? then push int_array[index] to answer_array
+    PRINT answer_array
+  END
+  
