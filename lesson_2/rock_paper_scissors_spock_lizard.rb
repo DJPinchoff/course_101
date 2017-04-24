@@ -1,7 +1,31 @@
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 VALID_INPUT = ['r', 'p', 's', 'sp', 'l']
-PLAYER_POINT_STRING = "You won this round!"
-COMPUTER_POINT_STRING = "Computer won this round."
+PLAYER_POINT_STRING = "=> You won this round!"
+COMPUTER_POINT_STRING = "=> Computer won this round."
+PHRASES_HASH = {  'rock' => { 'lizard' => 'crushes' ,
+                              'scissors' => 'crushes' },
+                  'paper' => {  'rock' => 'covers',
+                                'spock' => 'disproves' },
+                  'scissors' => { 'paper' => 'cuts',
+                                  'lizard' => 'decapitates' },
+                  'lizard' => { 'spock' => 'poisons',
+                                'paper' => 'eats' },
+                  'spock' => {  'rock' => 'vaporizes',
+                                'scissors' => 'smashes'}}
+
+def phrase_string_constructor(winner_choice, loser_choice)
+  first_word = winner_choice.capitalize
+  second_word = PHRASES_HASH[winner_choice][loser_choice]
+
+  if loser_choice == 'spock'
+    third_word = loser_choice.capitalize
+  else
+    third_word = loser_choice
+  end
+
+  "#{first_word} #{second_word} #{third_word}!"
+end
+
 
 def rock_result(computer)
   case computer
@@ -153,11 +177,17 @@ loop do
             when 'lizard'
               lizard_result(computer_choice)
             end
-  prompt(result)
+  print(result + " ")
+
+  if result == PLAYER_POINT_STRING
+    player_score += 1
+    puts phrase_string_constructor(choice, computer_choice)
+  elsif result == COMPUTER_POINT_STRING
+    computer_score += 1
+    puts phrase_string_constructor(computer_choice, choice)
+  end
 
   puts
-  player_score += 1 if result == PLAYER_POINT_STRING
-  computer_score += 1 if result == COMPUTER_POINT_STRING
   prompt("Your score: #{player_score}")
   prompt("Computer score: #{computer_score}")
 
@@ -169,7 +199,6 @@ loop do
     prompt("YOU LOST!! The computer won the match!")
   end
 
-  puts
   answer = ''
   loop do
     prompt("Press ENTER to try again. Type 'Q' to quit.")
