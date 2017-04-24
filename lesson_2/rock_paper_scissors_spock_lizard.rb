@@ -1,11 +1,7 @@
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 VALID_INPUT = ['r', 'p', 's', 'sp', 'l']
-PLAYER_POINT_STRING = "You win a point!"
-COMPUTER_POINT_STRING = "Computer wins a point."
-
-def input_index_to_choice(index)
-  VALID_CHOICES[index]
-end
+PLAYER_POINT_STRING = "You won this round!"
+COMPUTER_POINT_STRING = "Computer won this point."
 
 def rock_result(computer)
   case computer
@@ -99,8 +95,8 @@ computer_score = 0
 
 puts
 prompt("Let's play Rock, Paper, Scissors, Spock, or Lizard!")
-prompt("First to 5 points wins the match! (Unless you quit...)")
-prompt("Press ENTER to play!")
+prompt("First to 5 points wins the match.")
+prompt("Press ENTER to continue.")
 gets
 
 loop do
@@ -159,14 +155,14 @@ loop do
   puts
   answer = ''
   loop do
-    prompt("Do you want to keep going? Please type 'Y' or 'N'.")
+    prompt("Press ENTER to try again. Type 'Q' to quit.")
     answer = gets.chomp.downcase
-    break if answer == 'y' || answer == 'n'
+    break if answer == '' || answer == 'q'
 
     prompt("I'm sorry I didn't understand.")
   end
 
-  break unless answer == 'y'
+  break unless answer == ''
 
   if player_won?(player_score) || computer_won?(computer_score)
     player_score = 0
