@@ -2,30 +2,25 @@ VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 VALID_INPUT = ['r', 'p', 's', 'sp', 'l']
 PLAYER_POINT_STRING = "=> You won this round!"
 COMPUTER_POINT_STRING = "=> Computer won this round."
-PHRASES_HASH = {  'rock' => { 'lizard' => 'crushes' ,
-                              'scissors' => 'crushes' },
-                  'paper' => {  'rock' => 'covers',
-                                'spock' => 'disproves' },
-                  'scissors' => { 'paper' => 'cuts',
-                                  'lizard' => 'decapitates' },
-                  'lizard' => { 'spock' => 'poisons',
-                                'paper' => 'eats' },
-                  'spock' => {  'rock' => 'vaporizes',
-                                'scissors' => 'smashes'}}
+PHRASES_HASH = { 'rock' => { 'lizard' => 'crushes',
+                             'scissors' => 'crushes' },
+                 'paper' => { 'rock' => 'covers',
+                              'spock' => 'disproves' },
+                 'scissors' => { 'paper' => 'cuts',
+                                 'lizard' => 'decapitates' },
+                 'lizard' => { 'spock' => 'poisons',
+                               'paper' => 'eats' },
+                 'spock' => { 'rock' => 'vaporizes',
+                              'scissors' => 'smashes' } }
 
 def phrase_string_constructor(winner_choice, loser_choice)
   first_word = winner_choice.capitalize
   second_word = PHRASES_HASH[winner_choice][loser_choice]
-
-  if loser_choice == 'spock'
-    third_word = loser_choice.capitalize
-  else
-    third_word = loser_choice
-  end
+  third_word = loser_choice
+  third_word = third_word.capitalize if loser_choice == 'spock'
 
   "#{first_word} #{second_word} #{third_word}!"
 end
-
 
 def rock_result(computer)
   case computer
