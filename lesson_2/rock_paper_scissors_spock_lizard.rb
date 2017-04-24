@@ -1,7 +1,7 @@
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 VALID_INPUT = ['r', 'p', 's', 'sp', 'l']
 PLAYER_POINT_STRING = "You won this round!"
-COMPUTER_POINT_STRING = "Computer won this point."
+COMPUTER_POINT_STRING = "Computer won this round."
 
 def rock_result(computer)
   case computer
