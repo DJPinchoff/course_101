@@ -1,7 +1,7 @@
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 VALID_INPUT = ['r', 'p', 's', 'sp', 'l']
-PLAYER_POINT = "YOU!"
-COMPUTER_POINT = "Computer"
+PLAYER_POINT_STRING = "You win a point!"
+COMPUTER_POINT_STRING = "Computer wins a point."
 
 def input_index_to_choice(index)
   VALID_CHOICES[index]
@@ -10,45 +10,45 @@ end
 def rock_result(computer)
   case computer
   when 'lizard', 'scissors'
-    PLAYER_POINT
+    PLAYER_POINT_STRING
   when 'spock', 'paper'
-    COMPUTER_POINT
+    COMPUTER_POINT_STRING
   end
 end
 
 def paper_result(computer)
   case computer
   when 'rock', 'spock'
-    PLAYER_POINT
+    PLAYER_POINT_STRING
   when 'scissors', 'lizard'
-    COMPUTER_POINT
+    COMPUTER_POINT_STRING
   end
 end
 
 def scissors_result(computer)
   case computer
   when 'lizard', 'paper'
-    PLAYER_POINT
+    PLAYER_POINT_STRING
   when 'spock', 'rock'
-    COMPUTER_POINT
+    COMPUTER_POINT_STRING
   end
 end
 
 def spock_result(computer)
   case computer
   when 'rock', 'scissors'
-    PLAYER_POINT
+    PLAYER_POINT_STRING
   when 'lizard', 'paper'
-    COMPUTER_POINT
+    COMPUTER_POINT_STRING
   end
 end
 
 def lizard_result(computer)
   case computer
   when 'spock', 'paper'
-    PLAYER_POINT
+    PLAYER_POINT_STRING
   when 'rock', 'scissors'
-    COMPUTER_POINT
+    COMPUTER_POINT_STRING
   end
 end
 
@@ -70,13 +70,28 @@ end
 
 def print_dramatic_effect
   index = 1
-  print "=> And the winner is"
+  print "=> And the result is"
   while index <= 3
     sleep(0.35)
     print "."
     index += 1
   end
   puts
+end
+
+def print_thumbs_up
+  string = <<-TU
+
+┈┈┈┈┈┈▕▔╲
+┈┈┈┈┈┈┈▏▕
+┈┈┈┈┈┈┈▏▕▂▂▂
+▂▂▂▂▂▂╱┈▕▂▂▂▏
+▉▉▉▉▉┈┈┈▕▂▂▂▏
+▉▉▉▉▉┈┈┈▕▂▂▂▏
+▔▔▔▔▔▔╲▂▕▂▂▂I
+
+  TU
+  puts string
 end
 
 player_score = 0
@@ -96,10 +111,10 @@ loop do
     VALID_CHOICES.each_with_index do |word, index|
       prompt("'#{VALID_INPUT[index]}' for " + word)
     end
-    choice = gets.chomp
+    input = gets.chomp.downcase
 
-    if VALID_INPUT.include?(choice)
-      choice = VALID_CHOICES[VALID_INPUT.index(choice)]
+    if VALID_INPUT.include?(input)
+      choice = VALID_CHOICES[VALID_INPUT.index(input)]
       break
     end
 
@@ -129,15 +144,16 @@ loop do
   prompt(result)
 
   puts
-  player_score += 1 if result == PLAYER_POINT
-  computer_score += 1 if result == COMPUTER_POINT
+  player_score += 1 if result == PLAYER_POINT_STRING
+  computer_score += 1 if result == COMPUTER_POINT_STRING
   prompt("Your score: #{player_score}")
   prompt("Computer score: #{computer_score}")
 
   if player_won?(player_score)
-    prompt("CONGRATULATIONS!! You won the match.")
+    print_thumbs_up
+    prompt("CONGRATULATIONS!! You won the match!")
   elsif computer_won?(computer_score)
-    prompt("Computer won the match! Please try again...")
+    prompt("The computer won the match. Please try again.")
   end
 
   puts
