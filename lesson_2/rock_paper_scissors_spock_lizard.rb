@@ -90,8 +90,29 @@ def print_thumbs_up
   puts string
 end
 
+def print_thumbs_down
+  string = <<-TU
+
+███████▄▄███████████▄
+▓▓▓▓▓▓█░░░░░░░░░░░░░░█
+▓▓▓▓▓▓█░░░░░░░░░░░░░░█
+▓▓▓▓▓▓█░░░░░░░░░░░░░░█
+▓▓▓▓▓▓█░░░░░░░░░░░░░░█
+▓▓▓▓▓▓█░░░░░░░░░░░░░░█
+▓▓▓▓▓▓███░░░░░░░░░░░░█
+██████▀░░░░░░░██████▀
+░░░░░░░░░█░░░░█
+░░░░░░░░░░█░░░█
+░░░░░░░░░░░█░░█
+░░░░░░░░░░░█░░█
+░░░░░░░░░░░░▀▀
+
+  TU
+  puts string
+end
+
 player_score = 0
-computer_score = 0
+computer_score = 4
 
 puts
 prompt("Let's play Rock, Paper, Scissors, Spock, or Lizard!")
@@ -151,7 +172,8 @@ loop do
     print_thumbs_up
     prompt("CONGRATULATIONS!! You won the match!")
   elsif computer_won?(computer_score)
-    prompt("The computer won the match. Please try again.")
+    print_thumbs_down
+    prompt("YOU LOST!! The computer won the match!")
   end
 
   puts
