@@ -101,6 +101,7 @@ gets
 
 loop do
   clear_screen
+
   choice = ''
   loop do
     prompt("Choose an action:")
@@ -123,6 +124,7 @@ loop do
   prompt("Computer chose: #{computer_choice}")
 
   print_dramatic_effect
+
   result =  case choice
             when computer_choice
               "It's a tie!"
@@ -162,7 +164,7 @@ loop do
     prompt("I'm sorry I didn't understand.")
   end
 
-  break unless answer == ''
+  break if answer == 'q'
 
   if player_won?(player_score) || computer_won?(computer_score)
     player_score = 0
