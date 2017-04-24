@@ -24,8 +24,8 @@ end
 
 loop do
   choice = ''
+  clear_screen
   loop do
-    clear_screen
     prompt("Choose one: #{VALID_CHOICES.join(', ')}!")
     choice = gets.chomp
 
