@@ -1,0 +1,57 @@
+def display_result(player, computer, player_score, computer_score)
+  result = 'It's a tie!" if player == computer
+  
+  result =  case player
+            when 'rock'
+              case computer
+              when 'lizard' || 'scissors'
+                "You win!" # SWITCH ORDER OF INCREMENT AND STRING EVERYWHERE
+                increment player_wins 
+              when 'spock' || 'paper'
+                "Computer wins!"
+                increment computer_wins
+              end
+
+            when 'scissors'
+              case computer
+              when 'lizard' || 'paper'
+                "You win!"
+                increment player_wins
+              when 'spock' || 'rock'
+                "Computer wins!"
+                increment computer_wins
+              end
+
+            when 'paper'
+              case computer
+              when 'rock' || 'spock'
+                "You win!"
+                increment player_wins
+              when 'scissors' || 'lizard'
+                "Computer wins!"
+                increment computer_wins
+              end
+          
+            when 'lizard'
+              case computer
+              when 'spock' || 'paper'
+                "You win!"
+                increment player_wins
+              when 'rock' || 'scissors'
+                "Computer wins!"
+                increment computer_wins
+              end
+          
+            when 'spock'
+              case computer
+              when 'rock' || 'scissors'
+                "You win!"
+                increment player_wins
+              when 'lizard' || 'paper'
+                "Computer wins!"
+                increment computer_wins
+              end
+            end
+  
+  puts result  
+end          
