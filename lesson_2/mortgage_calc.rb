@@ -5,8 +5,8 @@ rescue ArgumentError
   false
 end
 
-def calc_payment(amount, monthly_rate, duration)
-  amount * (monthly_rate / (1 - (1 + monthly_rate)**-duration))
+def calc_payment(amount, monthly_rate, monthly_duration)
+  amount * (monthly_rate / (1 - (1 + monthly_rate)**-monthly_duration))
 end
 
 def print_calculating_timer
