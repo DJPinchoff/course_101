@@ -105,7 +105,7 @@ def print_thumbs_down
 end
 
 player_score = 0
-computer_score = 4
+computer_score = 0
 
 puts
 prompt("Let's play Rock, Paper, Scissors, Spock, or Lizard!")
