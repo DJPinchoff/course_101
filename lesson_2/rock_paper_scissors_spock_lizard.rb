@@ -1,7 +1,8 @@
-VALID_CHOICES = ['rock', 'paper', 'scissors', 'spock', 'lizard']
-VALID_INPUT = ['r', 'p', 's', 'sp', 'l']
-PLAYER_POINT_STRING = "=> You won this round!"
-COMPUTER_POINT_STRING = "=> Computer won this round."
+INPUT_TO_CHOICES_HASH = { "r" => 'rock', 'p' => 'paper',
+                          "s" => 'scissors', 'sp' => 'spock',
+                          "l" => 'lizard' }
+PLAYER_WINS_ROUND_STRING = "=> You won this round!"
+COMPUTER_WINS_ROUND_STRING = "=> Computer won this round."
 PHRASES_HASH = { 'rock' => { 'lizard' => 'crushes',
                              'scissors' => 'crushes' },
                  'paper' => { 'rock' => 'covers',
@@ -25,45 +26,45 @@ end
 def rock_result(computer)
   case computer
   when 'lizard', 'scissors'
-    PLAYER_POINT_STRING
+    PLAYER_WINS_ROUND_STRING
   when 'spock', 'paper'
-    COMPUTER_POINT_STRING
+    COMPUTER_WINS_ROUND_STRING
   end
 end
 
 def paper_result(computer)
   case computer
   when 'rock', 'spock'
-    PLAYER_POINT_STRING
+    PLAYER_WINS_ROUND_STRING
   when 'scissors', 'lizard'
-    COMPUTER_POINT_STRING
+    COMPUTER_WINS_ROUND_STRING
   end
 end
 
 def scissors_result(computer)
   case computer
   when 'lizard', 'paper'
-    PLAYER_POINT_STRING
+    PLAYER_WINS_ROUND_STRING
   when 'spock', 'rock'
-    COMPUTER_POINT_STRING
+    COMPUTER_WINS_ROUND_STRING
   end
 end
 
 def spock_result(computer)
   case computer
   when 'rock', 'scissors'
-    PLAYER_POINT_STRING
+    PLAYER_WINS_ROUND_STRING
   when 'lizard', 'paper'
-    COMPUTER_POINT_STRING
+    COMPUTER_WINS_ROUND_STRING
   end
 end
 
 def lizard_result(computer)
   case computer
   when 'spock', 'paper'
-    PLAYER_POINT_STRING
+    PLAYER_WINS_ROUND_STRING
   when 'rock', 'scissors'
-    COMPUTER_POINT_STRING
+    COMPUTER_WINS_ROUND_STRING
   end
 end
 
@@ -138,20 +139,20 @@ loop do
   choice = ''
   loop do
     prompt("Choose an action:")
-    VALID_CHOICES.each_with_index do |word, index|
-      prompt("'#{VALID_INPUT[index]}' for " + word)
+    INPUT_TO_CHOICES_HASH.each do |k, v|
+      prompt("Type #{k} for #{v}.")
     end
     input = gets.chomp.downcase
 
-    if VALID_INPUT.include?(input)
-      choice = VALID_CHOICES[VALID_INPUT.index(input)]
+    if INPUT_TO_CHOICES_HASH.include?(input)
+      choice = INPUT_TO_CHOICES_HASH[input]
       break
     end
 
     prompt("That wasn't a valid choice. Try again!")
   end
 
-  computer_choice = VALID_CHOICES.sample
+  computer_choice = INPUT_TO_CHOICES_HASH.values.sample
 
   prompt("You chose: #{choice}")
   prompt("Computer chose: #{computer_choice}")
@@ -174,10 +175,10 @@ loop do
             end
   print(result + " ")
 
-  if result == PLAYER_POINT_STRING
+  if result == PLAYER_WINS_ROUND_STRING
     player_score += 1
     puts phrase_string_constructor(choice, computer_choice)
-  elsif result == COMPUTER_POINT_STRING
+  elsif result == COMPUTER_WINS_ROUND_STRING
     computer_score += 1
     puts phrase_string_constructor(computer_choice, choice)
   end
