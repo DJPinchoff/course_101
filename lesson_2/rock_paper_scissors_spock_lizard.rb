@@ -1,8 +1,6 @@
 INPUT_TO_CHOICES_HASH = { "r" => 'rock', 'p' => 'paper',
                           "s" => 'scissors', 'sp' => 'spock',
                           "l" => 'lizard' }
-PLAYER_WINS_ROUND_STRING = "=> You won this round!"
-COMPUTER_WINS_ROUND_STRING = "=> Computer won this round."
 PHRASES_HASH = { 'rock' => { 'lizard' => 'crushes',
                              'scissors' => 'crushes' },
                  'paper' => { 'rock' => 'covers',
@@ -159,8 +157,6 @@ loop do
   print_dramatic_effect
 
   result =  case choice
-            when computer_choice
-              :tie
             when 'rock'
               rock_result(computer_choice)
             when 'paper'
@@ -174,11 +170,11 @@ loop do
             end
 
   if result == :player
-    print(PLAYER_WINS_ROUND_STRING + " ")
+    print("=> You won this round! ")
     player_score += 1
     puts phrase_string_constructor(choice, computer_choice)
   elsif result == :computer
-    print(COMPUTER_WINS_ROUND_STRING + " ")
+    print("=> Computer won this round.")
     computer_score += 1
     puts phrase_string_constructor(computer_choice, choice)
   else
