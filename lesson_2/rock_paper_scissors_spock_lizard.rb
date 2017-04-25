@@ -26,45 +26,45 @@ end
 def rock_result(computer)
   case computer
   when 'lizard', 'scissors'
-    PLAYER_WINS_ROUND_STRING
+    :player
   when 'spock', 'paper'
-    COMPUTER_WINS_ROUND_STRING
+    :computer
   end
 end
 
 def paper_result(computer)
   case computer
   when 'rock', 'spock'
-    PLAYER_WINS_ROUND_STRING
+    :player
   when 'scissors', 'lizard'
-    COMPUTER_WINS_ROUND_STRING
+    :computer
   end
 end
 
 def scissors_result(computer)
   case computer
   when 'lizard', 'paper'
-    PLAYER_WINS_ROUND_STRING
+    :player
   when 'spock', 'rock'
-    COMPUTER_WINS_ROUND_STRING
+    :computer
   end
 end
 
 def spock_result(computer)
   case computer
   when 'rock', 'scissors'
-    PLAYER_WINS_ROUND_STRING
+    :player
   when 'lizard', 'paper'
-    COMPUTER_WINS_ROUND_STRING
+    :computer
   end
 end
 
 def lizard_result(computer)
   case computer
   when 'spock', 'paper'
-    PLAYER_WINS_ROUND_STRING
+    :player
   when 'rock', 'scissors'
-    COMPUTER_WINS_ROUND_STRING
+    :computer
   end
 end
 
@@ -76,12 +76,8 @@ def clear_screen
   system('clear') || system('cls')
 end
 
-def player_won?(player_score)
-  player_score == 5
-end
-
-def computer_won?(computer_score)
-  computer_score == 5
+def end_of_match?(score)
+  score == 5
 end
 
 def print_dramatic_effect
@@ -97,34 +93,37 @@ end
 
 def print_thumbs_up
   string = <<-TU
-┈┈┈┈┈┈▕▔╲
-┈┈┈┈┈┈┈▏▕
-┈┈┈┈┈┈┈▏▕▂▂▂
-▂▂▂▂▂▂╱┈▕▂▂▂▏
-▉▉▉▉▉┈┈┈▕▂▂▂▏
-▉▉▉▉▉┈┈┈▕▂▂▂▏
-▔▔▔▔▔▔╲▂▕▂▂▂I
+            _
+           /(|
+          (  :
+         __\  \  _____
+       (____)  `|
+      (____)|   |
+       (____).__|
+        (___)__.|_____
+
   TU
   puts string
 end
 
 def print_thumbs_down
   string = <<-TU
-███▄█████▄▄
-▓▓▓█░░░░░░░██
-▓▓▓█░░░░░░░██
-▓▓▓█░░░░░░░██
-▓▓▓█░░░░░░░██
-███▀░░░███▀▀
-░░░█░░░█░░
-░░░░█░░█░░
-░░░░█░░█░░
-░░░░░▀▀░░░
+         _,....._
+        (___     `'-.__
+       (____
+       (____
+       (____         ___
+            `)   .-'`
+            /  .'
+           | =|
+            \ _\
+
+
   TU
   puts string
 end
 
-player_score = 0
+player_score = 4
 computer_score = 0
 
 puts
@@ -161,7 +160,7 @@ loop do
 
   result =  case choice
             when computer_choice
-              "It's a tie!"
+              :tie
             when 'rock'
               rock_result(computer_choice)
             when 'paper'
@@ -173,24 +172,27 @@ loop do
             when 'lizard'
               lizard_result(computer_choice)
             end
-  print(result + " ")
 
-  if result == PLAYER_WINS_ROUND_STRING
+  if result == :player
+    print(PLAYER_WINS_ROUND_STRING + " ")
     player_score += 1
     puts phrase_string_constructor(choice, computer_choice)
-  elsif result == COMPUTER_WINS_ROUND_STRING
+  elsif result == :computer
+    print(COMPUTER_WINS_ROUND_STRING + " ")
     computer_score += 1
     puts phrase_string_constructor(computer_choice, choice)
+  else
+    prompt("It's a tie!")
   end
 
   puts
   prompt("Your score: #{player_score}")
   prompt("Computer score: #{computer_score}")
 
-  if player_won?(player_score)
+  if end_of_match?(player_score)
     print_thumbs_up
     prompt("CONGRATULATIONS!! You won the match!")
-  elsif computer_won?(computer_score)
+  elsif end_of_match?(computer_score)
     print_thumbs_down
     prompt("YOU LOST!! The computer won the match!")
   end
@@ -206,7 +208,7 @@ loop do
 
   break if answer == 'q'
 
-  if player_won?(player_score) || computer_won?(computer_score)
+  if end_of_match?(player_score) || end_of_match?(computer_score)
     player_score = 0
     computer_score = 0
   end
