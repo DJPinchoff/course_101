@@ -17,14 +17,14 @@ We learned that whether the above "coincidentally" does what we think we wanted 
 How can we refactor this exercise to make the result easier to predict and easier for the next programmer to maintain?
 =end
 
-def tricky_but_consistent_method(a_string_param, an_array_param)
+def tricky_but_consistent_method!(a_string_param, an_array_param)
   an_array_param << "rutabaga"
   a_string_param << "rutabaga"
 end
 
 my_string = "pumpkins"
 my_array = ["pumpkins"]
-tricky_but_consistent_method(my_string, my_array)
+tricky_but_consistent_method!(my_string, my_array)
 
 puts "My string looks like this now: #{my_string}"
 puts "My array looks like this now: #{my_array}"
