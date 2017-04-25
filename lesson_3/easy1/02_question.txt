@@ -1,0 +1,35 @@
+Describe the difference between ! and ? in Ruby. And explain what would happen in the following scenarios:
+
+    1) what is != and where should you use it?
+    2) put ! before something, like !user_name
+    3) put ! after something, like words.uniq!
+    4) put ? before something
+    5) put ? after something
+    6) put !! before something, like !!user_name
+
+I'm sure that ! and ? can be used in a bunch of different contexts for different things.
+! is referred to as the bang operator - it means 'NOT' as in a logical 'NOT' whatever the expression evaluates to... NOT true... or NOT false - which is true.
+
+? is often used at the end of a method name like .odd? or .even?... It is also used in a ternary ? true : false context as in.. if something? then this : or that.
+
+1) != means 'not equal' when you are evaluating an expression.
+      if this != that
+        do this
+      else
+        do that
+      end
+
+2) !user_name would evaluate to false, unless
+          -it throws an error because user_name isn't defined
+          -user_name is equal to nil
+
+3) A ! operator after things is a signal that the method you are calling will mutate the caller.
+      words = ['banana', 'apple', 'banana']
+      words.uniq!
+      words = ['banana', 'apple']
+
+4) Putting a ? before a gives me a Syntax Error.
+
+5) Putting a ? after something gives me a NoMethodError.
+
+6) !!user_name will return true if it is a defined variable. It means 'not''not' and since almost everything except for nil and false are truthy in Ruby, most everything with !! in front of it will be true as well.

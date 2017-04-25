@@ -1,0 +1,13 @@
+What would you expect the code below to print out?
+
+numbers = [1, 2, 2, 3]
+numbers.uniq
+
+puts numbers
+
+ANSWER:
+1
+2
+2
+3
+The same array that numbers was assigned to will print out because #uniq does not mutate the caller. If #uniq! was called, then it would be different.

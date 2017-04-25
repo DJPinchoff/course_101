@@ -1,0 +1,14 @@
+Question 4
+
+The Ruby Array class has several methods for removing items from the array. Two of them have very similar names. Let's see how they differ:
+
+numbers = [1, 2, 3, 4, 5]
+
+What do the following method calls do (assume we reset numbers to the original array between method calls)?
+
+numbers.delete_at(1)
+numbers.delete(1)
+
+Both methods mutate the array.
+#delete_at is referring to the first index of the array.
+#delete is referring to an object with the value of 1.
