@@ -174,7 +174,7 @@ loop do
     player_score += 1
     puts phrase_string_constructor(choice, computer_choice)
   elsif result == :computer
-    print("=> Computer won this round.")
+    print("=> Computer won this round. ")
     computer_score += 1
     puts phrase_string_constructor(computer_choice, choice)
   else
