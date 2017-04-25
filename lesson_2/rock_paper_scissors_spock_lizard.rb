@@ -11,6 +11,68 @@ PHRASES_HASH = { 'rock' => { 'lizard' => 'crushes',
                                'paper' => 'eats' },
                  'spock' => { 'rock' => 'vaporizes',
                               'scissors' => 'smashes' } }
+ASCII_PAPER = <<-PAPER
+
+           ___..__
+  __..--""" ._ __.'
+              "-..__
+            '"--..__";
+ ___        '--...__"";
+    `-..__ '"---..._;"
+          """"----'
+
+PAPER
+
+ASCII_ROCK = <<-ROCK
+
+       ,--.--.__
+------" _, \_____)
+        / _/____)
+        \//(____)
+------\     (__)
+       `-----"
+
+ROCK
+
+ASCII_SCISSORS = <<-SCISSORS
+
+      .-.  _
+      | | / )
+      | |/ /
+     _|__ /_
+    / __)-' )
+    |   (.-')
+     >._>-'
+
+SCISSORS
+
+ASCII_SPOCK = <<-SPOCK
+        _
+     .-T |   _
+     | | |  / |
+     | | | / /`|
+  _  | | |/ / /
+ | `,' '.' / /
+  |_  `-. '--|
+    |    '   |
+     |  .` _/
+     |    |
+
+SPOCK
+
+ASCII_LIZARD = <<-LIZARD
+
+          _____________
+ ....-''``'._ _________)
+         ,_  '-.___)
+           `'-._)_)
+ -----'``"-,__(__)
+
+LIZARD
+
+ASCII_HASH = { 'rock' => ASCII_ROCK, 'scissors' => ASCII_SCISSORS,
+               'paper' => ASCII_PAPER, 'spock' => ASCII_SPOCK,
+               'lizard' => ASCII_LIZARD }
 
 def phrase_string_constructor(winner_choice, loser_choice)
   first_word = winner_choice.capitalize
@@ -81,8 +143,8 @@ end
 def print_dramatic_effect
   index = 1
   print "=> And the result is"
-  while index <= 4
-    sleep(0.4)
+  while index <= 3
+    sleep(0.6)
     print "."
     index += 1
   end
@@ -91,14 +153,14 @@ end
 
 def print_thumbs_up
   string = <<-TU
-            _
-           /(|
-          (  :
-         __\  \  _____
-       (____)  `|
-      (____)|   |
-       (____).__|
-        (___)__.|_____
+        _
+       /(|
+      (  :
+     __\  \    _____
+   (____)  `|
+  (____)|   |
+   (____).__|
+    (___)__.|_____
 
   TU
   puts string
@@ -106,16 +168,15 @@ end
 
 def print_thumbs_down
   string = <<-TU
-         _,....._
-        (___     `'-.__
-       (____
-       (____
-       (____         ___
-            `)   .-'`
-            /  .'
-           | =|
-            \ _\
-
+     _,....._
+    (___     `'-.__
+   (____
+   (____
+   (____         ___
+        `)   .-'`
+        /  .'
+        | =|
+         \_/
 
   TU
   puts string
@@ -135,10 +196,11 @@ loop do
 
   choice = ''
   loop do
-    prompt("Choose an action:")
+    prompt("What's your choice?")
     INPUT_TO_CHOICES_HASH.each do |k, v|
       prompt("Type #{k} for #{v}.")
     end
+    prompt("Then hit ENTER to continue.")
     input = gets.chomp.downcase
 
     if INPUT_TO_CHOICES_HASH.include?(input)
@@ -150,6 +212,10 @@ loop do
   end
 
   computer_choice = INPUT_TO_CHOICES_HASH.values.sample
+
+  puts ASCII_HASH[choice]
+  puts "        -VS-"
+  puts ASCII_HASH[computer_choice]
 
   prompt("You chose: #{choice}")
   prompt("Computer chose: #{computer_choice}")
