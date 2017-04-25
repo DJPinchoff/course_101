@@ -81,8 +81,8 @@ end
 def print_dramatic_effect
   index = 1
   print "=> And the result is"
-  while index <= 3
-    sleep(0.35)
+  while index <= 4
+    sleep(0.4)
     print "."
     index += 1
   end
@@ -121,7 +121,7 @@ def print_thumbs_down
   puts string
 end
 
-player_score = 4
+player_score = 0
 computer_score = 0
 
 puts
