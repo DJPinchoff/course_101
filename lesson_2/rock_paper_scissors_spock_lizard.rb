@@ -255,12 +255,14 @@ loop do
   if end_of_match?(player_score)
     clear_screen
     print_thumbs_up
-    prompt("CONGRATULATIONS!! You won!")
+    prompt("CONGRATULATIONS!! You win the match!")
+    prompt(phrase_string_constructor(choice, computer_choice))
     print_current_scores(player_score, computer_score)
   elsif end_of_match?(computer_score)
     clear_screen
     print_thumbs_down
-    prompt("GAME OVER!")
+    prompt("GAME OVER! Computer wins the match.")
+    prompt(phrase_string_constructor(computer_choice, choice))
     print_current_scores(player_score, computer_score)
   end
 
