@@ -142,10 +142,11 @@ end
 
 def print_dramatic_effect
   index = 1
-  print "=> And the result is"
+  print "=> Battling"
+  sleep(0.6)
   while index <= 3
-    sleep(0.6)
     print "."
+    sleep(0.6)
     index += 1
   end
   puts
@@ -182,6 +183,11 @@ def print_thumbs_down
   puts string
 end
 
+def print_current_scores(player_score, computer_score)
+  prompt("Player Score: #{player_score}")
+  prompt("Computer Score: #{computer_score}")
+end
+
 player_score = 0
 computer_score = 0
 
@@ -196,11 +202,11 @@ loop do
 
   choice = ''
   loop do
-    prompt("What do you choose?")
     INPUT_TO_CHOICES_HASH.each do |k, v|
-      prompt("Type #{k} for #{v}.")
+      puts "#{k.upcase} for #{v.capitalize}".center(27)
     end
-    prompt("Then hit ENTER to continue.")
+    prompt("Pick one and press ENTER.")
+    print "=> "
     input = gets.chomp.downcase
 
     if INPUT_TO_CHOICES_HASH.include?(input)
@@ -233,32 +239,34 @@ loop do
             end
 
   if result == :player
-    print("=> You won this round! ")
+    print("=> You won!! ")
     player_score += 1
     puts phrase_string_constructor(choice, computer_choice)
   elsif result == :computer
-    print("=> Computer won this round. ")
+    print("=> Computer won! ")
     computer_score += 1
     puts phrase_string_constructor(computer_choice, choice)
   else
     prompt("It's a tie!")
   end
 
-  puts
-  prompt("Player Score: #{player_score}")
-  prompt("Computer Score: #{computer_score}")
+  print_current_scores(player_score, computer_score)
 
   if end_of_match?(player_score)
+    clear_screen
     print_thumbs_up
-    prompt("CONGRATULATIONS!! You won the match!")
+    prompt("CONGRATULATIONS!! You won!")
+    print_current_scores(player_score, computer_score)
   elsif end_of_match?(computer_score)
+    clear_screen
     print_thumbs_down
-    prompt("GAME OVER!! Computer won the match!")
+    prompt("GAME OVER!")
+    print_current_scores(player_score, computer_score)
   end
 
   answer = ''
   loop do
-    prompt("Press ENTER to try again. Type 'Q' to quit.")
+    prompt("Press ENTER to play again! Type 'Q' to quit.")
     answer = gets.chomp.downcase
     break if answer == '' || answer == 'q'
 
