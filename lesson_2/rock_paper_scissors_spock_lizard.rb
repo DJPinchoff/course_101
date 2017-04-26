@@ -137,7 +137,7 @@ def clear_screen
 end
 
 def end_of_match?(score)
-  score == 5
+  score == 3
 end
 
 def print_dramatic_effect
@@ -186,9 +186,9 @@ player_score = 0
 computer_score = 0
 
 puts
-prompt("Let's play Rock, Paper, Scissors, Spock, or Lizard!")
-prompt("First to 5 points wins the match.")
-prompt("Press ENTER to continue.")
+prompt("Welcome to Rock, Paper, Scissors, Spock, Lizard!" + "<=".rjust(3))
+prompt("First player with 3 points WINS the match!!".center(47) + "<=".rjust(4))
+prompt("Press ENTER to Continue".center(45) + "<=".rjust(6))
 gets
 
 loop do
@@ -196,7 +196,7 @@ loop do
 
   choice = ''
   loop do
-    prompt("What's your choice?")
+    prompt("What do you choose?")
     INPUT_TO_CHOICES_HASH.each do |k, v|
       prompt("Type #{k} for #{v}.")
     end
@@ -216,9 +216,6 @@ loop do
   puts ASCII_HASH[choice]
   puts "        -VS-"
   puts ASCII_HASH[computer_choice]
-
-  prompt("You chose: #{choice}")
-  prompt("Computer chose: #{computer_choice}")
 
   print_dramatic_effect
 
@@ -248,15 +245,15 @@ loop do
   end
 
   puts
-  prompt("Your score: #{player_score}")
-  prompt("Computer score: #{computer_score}")
+  prompt("Player Score: #{player_score}")
+  prompt("Computer Score: #{computer_score}")
 
   if end_of_match?(player_score)
     print_thumbs_up
     prompt("CONGRATULATIONS!! You won the match!")
   elsif end_of_match?(computer_score)
     print_thumbs_down
-    prompt("YOU LOST!! The computer won the match!")
+    prompt("GAME OVER!! Computer won the match!")
   end
 
   answer = ''
@@ -276,5 +273,5 @@ loop do
   end
 end
 
-prompt("Thank you for playing Rock, Paper, Scissors, Spock, or Lizard.")
-prompt("Goodbye!")
+prompt("Thank you for playing!")
+prompt("Goodbye".center(20))
