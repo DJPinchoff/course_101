@@ -1,7 +1,7 @@
 INPUT_TO_CHOICES_HASH = { "r" => 'rock', 'p' => 'paper',
                           "s" => 'scissors', 'sp' => 'spock',
                           "l" => 'lizard' }
-PHRASES_HASH = { 'rock' => { 'lizard' => 'crushes',
+WINNING_PHRASES_HASH = { 'rock' => { 'lizard' => 'crushes',
                              'scissors' => 'crushes' },
                  'paper' => { 'rock' => 'covers',
                               'spock' => 'disproves' },
@@ -76,7 +76,7 @@ ASCII_HASH = { 'rock' => ASCII_ROCK, 'scissors' => ASCII_SCISSORS,
 
 def phrase_string_constructor(winner_choice, loser_choice)
   first_word = winner_choice.capitalize
-  second_word = PHRASES_HASH[winner_choice][loser_choice]
+  second_word = WINNING_PHRASES_HASH[winner_choice][loser_choice]
   third_word = loser_choice
   third_word = third_word.capitalize if loser_choice == 'spock'
 
@@ -157,7 +157,7 @@ def print_thumbs_up
         _
        /(|
       (  :
-     __\  \    _____
+     __\\  \\  _____
    (____)  `|
   (____)|   |
    (____).__|
@@ -175,9 +175,9 @@ def print_thumbs_down
    (____
    (____         ___
         `)   .-'`
-        /  .'
+        //  .'
         | =|
-         \_/
+         \\_/
 
   TU
   puts string
@@ -255,20 +255,20 @@ loop do
   if end_of_match?(player_score)
     clear_screen
     print_thumbs_up
-    prompt("CONGRATULATIONS!! You win the match!")
     prompt(phrase_string_constructor(choice, computer_choice))
+    prompt("CONGRATULATIONS!! You win the match!")
     print_current_scores(player_score, computer_score)
   elsif end_of_match?(computer_score)
     clear_screen
     print_thumbs_down
-    prompt("GAME OVER! Computer wins the match.")
     prompt(phrase_string_constructor(computer_choice, choice))
+    prompt("GAME OVER! Computer wins the match.")
     print_current_scores(player_score, computer_score)
   end
 
   answer = ''
   loop do
-    prompt("Press ENTER to play again! Type 'Q' to quit.")
+    prompt("Press ENTER to continue! Type 'Q' to quit.")
     answer = gets.chomp.downcase
     break if answer == '' || answer == 'q'
 
@@ -284,4 +284,4 @@ loop do
 end
 
 prompt("Thank you for playing!")
-prompt("Goodbye".center(20))
+puts
