@@ -1,0 +1,45 @@
+[[1, 2], [3, 4]].map do |arr|
+  arr.map do |num|
+    num * 2
+  end
+end
+
+What will the return value be in this example? Use what you've learned so far to break it down on your own before checking the solution below.
+
+=> [[2, 4], [6, 8]]
+
+Line 1
+  Action:	Map Method
+  Object:	[[1, 2], [3, 4]]
+  Side Effect: none
+  Return Value: New Array
+  Return Used?: no
+
+
+Line 1-5
+  Action: Outer Block
+  Object:	each sub-array
+  Side Effect: none
+  Return Value:	New Array to place in Outer Array
+  Return Used?: Yes
+
+Line 2
+  Action: Map Method
+  Object: Each sub-array
+  Side Effect: none
+  Return Value: New Array
+  Return Used?: Affects outer-blocks Return Value
+
+Line 2-4
+  Action: Inner Block
+  Object: each element within sub-array
+  Side Effect: none
+  Return Value: Transformed Integer
+  Return Used?: Yes, to form new inner array
+
+Line 3
+  Action: num * 2
+  Object: num is the element from the sub array
+  Side Effect: none
+  Return Value: Transformed Integer
+  Return Used?: yes, for new array/value of inner block

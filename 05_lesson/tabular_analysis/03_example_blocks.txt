@@ -1,0 +1,40 @@
+[[1, 2], [3, 4]].map do |arr|
+  puts arr.first
+  arr.first
+end
+
+Output:
+1
+3
+=> [1, 3]
+
+
+Line,	Action,	Object,	Side Effect,	Return Value,	Return Value Used?
+
+Line 1 performs map on the outer array.
+  -There is no side effect.
+  -The return value is a new array [1, 3].
+  -The return value is not used, but shown on line 6.
+
+Lines 1-4 is the block execution on each sub-array within the outer array.
+  -There is no side-effect.
+  -The return value of the block each block is the first element of each sub-array. 1, then 3.
+  -The return value is used by the map method, placing the 1 and 3 into an array... [1, 3]
+
+Line 2
+  -The first method is called on the sub array.
+  -There is no side effect.
+  -The return value is the first element of the sub array. (1 then 3)
+  -The return value is used by the puts method.
+
+Line 2
+  -The puts method is called on the return of array.first above.
+  -Output of each integer is printed to screen.
+  -The return value is nil.
+  -The return value is not used.
+
+Line 3
+  -The first method is again called on sub array.
+  -There is no side effect.
+  -The return value is the first element of the sub array. (1 then 3)
+  -The return value is used by the map method.

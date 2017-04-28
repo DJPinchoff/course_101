@@ -1,0 +1,64 @@
+my_arr = [[18, 7], [3, 12]].each do |arr|
+  arr.each do |num|
+    if num > 5
+      puts num
+    end
+  end
+end
+
+Output:
+18
+7
+12
+=> [[18, 7], [3, 12]]
+
+Line,	Action,	Object,	Side Effect,	Return Value,	Return Value Used?
+
+Line 1
+  Action: variable assignment
+  Object: my_arr
+  Side Effect: none
+  Return value: [[18, 7], [3, 12]]
+  rv used?: n/a
+
+Line 1
+  Action: Each method
+  Object: my_arr outer array
+  Side Effect: none
+  Return Value: [[18, 7], [3, 12]]
+  RV Used?: Assigned to variable my_arr
+
+Line 1-7
+  Action: Block of first each method
+  Object: Each sub array
+  Side Effect: none
+  RV: last sub array
+  Rv Used? No.
+
+Line 2:
+  Action: Each method
+  Object: each element of each sub array
+  side effect: none
+  return value: each array supplied from outer array
+  rv used?: no
+
+Line 2-6:
+  Action: Block of second each method
+  Object: Each sub array
+  side effect: none
+  return value: nil
+  rv used?: affects return value of outer block
+
+Line 3:
+  Action: If statement
+  Object: each element of sub array
+  side effect: none
+  return value: nil
+  rv used?: affects value of inner block
+
+Line 4:
+  Action: puts method
+  object: each element of the sub array > 5
+  side effect: output print of element
+  return value: nil
+  rv used?: YES, this is the return value of inner block
