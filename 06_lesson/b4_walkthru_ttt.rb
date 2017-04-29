@@ -20,7 +20,7 @@ def display_grid(grid_array)
   puts BOT_OF_GRID
   puts TOP_OF_GRID
   puts middle_of_grid(2, grid_array)
-  puts TOP_OF_GRID # misnomer for last row
+  puts TOP_OF_GRID
 end
 
 def board_full?(array)
@@ -36,7 +36,7 @@ def update_grid_array(choice, array, user_boolean)
   array.each do |sub_array|
     index = 0
     sub_array.each do |item|
-      if choice == item # 3 items in a row
+      if choice == item
         array[times][index] = user_boolean ? "X" : "O"
       end
       index += 1
