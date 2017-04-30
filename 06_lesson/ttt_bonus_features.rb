@@ -258,8 +258,8 @@ loop do
       end
       puts "I'm sorry. I didn't understand..."
     end
-  grid_array = update_grid(user_choice, grid_array, post_user_turn)
-  print_after_update(grid_array)
+    grid_array = update_grid(user_choice, grid_array, post_user_turn)
+    print_after_update(grid_array)
   end
 
   puts "...Thinking..."
@@ -309,14 +309,11 @@ loop do
   end
 
   if player_score == 3
-    puts "You've won too many games!! I quit."
+    puts "You won best 3 out of 5!! Let's start a new game!"
     puts
-    break
-
   elsif computer_score == 3
-    puts "I'm exhausted from all that winning!! See you next time."
+    puts "Computer won best 3 out of 5!! Let's start a new game!"
     puts
-    break
   end
 
   again = ""
@@ -339,5 +336,9 @@ loop do
                   [7, 8, 9]]
     print_after_update(grid_array)
     post_user_turn = determine_first_turn(grid_array)
+    if player_score == 3 || computer_score == 3
+      player_score = 0
+      computer_score = 0
+    end
   end
 end
