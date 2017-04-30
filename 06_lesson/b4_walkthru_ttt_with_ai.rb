@@ -1,7 +1,9 @@
-require 'pry'
 WELCOME = "  WELCOME TO TIC-TAC-TOE! "
 TOP_OF_GRID = "         |       |"
 BOT_OF_GRID = "  _______|_______|_______"
+USER_X = 'X'
+COMPUTER_O = 'O'
+FIRST_TURN = 'choose'
 
 def middle_of_grid(index, array)
   "     #{array[index][0]}   |   #{array[index][1]}   |   #{array[index][2]}"
@@ -24,64 +26,44 @@ def display_grid(grid_array)
 end
 
 def board_full?(array)
-  !array.flatten.any? do |item|
-    [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(item)
-  end
+  !array.flatten.any? { |item| [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(item) }
 end
 
 def check_defense_center(array)
   num = false
-  if array[1][1] == 'X'
-    num = 2 if array[2][1] == 'X'
-    num = 4 if array[1][2] == 'X'
-    num = 6 if array[1][0] == 'X'
-    num = 8 if array[0][1] == 'X'
+  if array[1][1] == USER_X
+    num = 2 if array[2][1] == USER_X
+    num = 4 if array[1][2] == USER_X
+    num = 6 if array[1][0] == USER_X
+    num = 8 if array[0][1] == USER_X
   end
   num
 end
 
 def check_defense_corners(array)
   num = false
-  if array[1][1] == 'X'
-    num = 1 if array[2][2] == 'X'
-    num = 3 if array[2][0] == 'X'
-    num = 7 if array[0][2] == 'X'
-    num = 9 if array[0][0] == 'X'
-  end
-  num
-end
-
-def check_defense_opp_edges(array)
-  num = false
-  if array[0][0] == 'X' && array[0][2] == 'X'
-    num = 2
-  elsif array[0][0] == 'X' && array[2][0] == 'X'
-    num = 4
-  elsif array[0][0] == 'X' && array[2][2] == 'X'
-    num = 5
-  elsif array[2][0] == 'X' && array[0][2] == 'X'
-    num = 5
-  elsif array[2][0] == 'X' && array[2][2] == 'X'
-    num = 8
-  elsif array[2][2] == 'X' && array[0][2] == 'X'
-    num = 6
+  if array[1][1] == USER_X
+    num = 1 if array[2][2] == USER_X
+    num = 3 if array[2][0] == USER_X
+    num = 7 if array[0][2] == USER_X
+    num = 9 if array[0][0] == USER_X
   end
   num
 end
 
 def check_defense_rows(array)
   num = false
-  if array[0][0] == 'X' && array[0][1] == 'X'
+  if array[0][0] == USER_X && array[0][1] == USER_X
     num = 3
-  elsif array[1][0] == 'X' && array[1][1] == 'X'
+  elsif array[1][0] == USER_X && array[1][1] == USER_X
     num = 6
-  elsif array[2][0] == 'X' && array[2][1] == 'X'
+  elsif array[2][0] == USER_X && array[2][1] == USER_X
     num = 9
-  elsif array[0][2] == 'X' && array[0][1] == 'X'
+  elsif array[0][2] == USER_X && array[0][1] == USER_X
     num = 1
-  elsif array[1][2] == 'X' && array[1][1] == 'X'
+  elsif array[1][2] == USER_X && array[1][1] == USER_X
     num = 4
-  elsif array[2][2] == 'X' && array[2][1] == 'X'
+  elsif array[2][2] == USER_X && array[2][1] == USER_X
     num = 7
   end
   num
@@ -89,17 +71,17 @@ end
 
 def check_defense_columns(array)
   num = false
-  if array[0][0] == 'X' && array[1][0] == 'X'
+  if array[0][0] == USER_X && array[1][0] == USER_X
     num = 7
-  elsif array[0][1] == 'X' && array[1][1] == 'X'
+  elsif array[0][1] == USER_X && array[1][1] == USER_X
     num = 8
-  elsif array[0][2] == 'X' && array[1][2] == 'X'
+  elsif array[0][2] == USER_X && array[1][2] == USER_X
     num = 9
-  elsif array[2][0] == 'X' && array[1][0] == 'X'
+  elsif array[2][0] == USER_X && array[1][0] == USER_X
     num = 1
-  elsif array[2][1] == 'X' && array[1][1] == 'X'
+  elsif array[2][1] == USER_X && array[1][1] == USER_X
     num = 2
-  elsif array[2][2] == 'X' && array[1][2] == 'X'
+  elsif array[2][2] == USER_X && array[1][2] == USER_X
     num = 3
   end
   num
@@ -107,57 +89,39 @@ end
 
 def check_offense_center(array)
   num = false
-  if array[1][1] == 'O'
-    num = 2 if array[2][1] == 'O'
-    num = 4 if array[1][2] == 'O'
-    num = 6 if array[1][0] == 'O'
-    num = 8 if array[0][1] == 'O'
+  if array[1][1] == COMPUTER_O
+    num = 2 if array[2][1] == COMPUTER_O
+    num = 4 if array[1][2] == COMPUTER_O
+    num = 6 if array[1][0] == COMPUTER_O
+    num = 8 if array[0][1] == COMPUTER_O
   end
   num
 end
 
 def check_offense_corners(array)
   num = false
-  if array[1][1] == 'O'
-    num = 1 if array[2][2] == 'O'
-    num = 3 if array[2][0] == 'O'
-    num = 7 if array[0][2] == 'O'
-    num = 9 if array[0][0] == 'O'
-  end
-  num
-end
-
-def check_offense_opp_edges(array)
-  num = false
-  if array[0][0] == 'O' && array[0][2] == 'O'
-    num = 2
-  elsif array[0][0] == 'O' && array[2][0] == 'O'
-    num = 4
-  elsif array[0][0] == 'O' && array[2][2] == 'O'
-    num = 5
-  elsif array[2][0] == 'O' && array[0][2] == 'O'
-    num = 5
-  elsif array[2][0] == 'O' && array[2][2] == 'O'
-    num = 8
-  elsif array[2][2] == 'O' && array[0][2] == 'O'
-    num = 6
+  if array[1][1] == COMPUTER_O
+    num = 1 if array[2][2] == COMPUTER_O
+    num = 3 if array[2][0] == COMPUTER_O
+    num = 7 if array[0][2] == COMPUTER_O
+    num = 9 if array[0][0] == COMPUTER_O
   end
   num
 end
 
 def check_offense_rows(array)
   num = false
-  if array[0][0] == 'O' && array[0][1] == 'O'
+  if array[0][0] == COMPUTER_O && array[0][1] == COMPUTER_O
     num = 3
-  elsif array[1][0] == 'O' && array[1][1] == 'O'
+  elsif array[1][0] == COMPUTER_O && array[1][1] == COMPUTER_O
     num = 6
-  elsif array[2][0] == 'O' && array[2][1] == 'O'
+  elsif array[2][0] == COMPUTER_O && array[2][1] == COMPUTER_O
     num = 9
-  elsif array[0][2] == 'O' && array[0][1] == 'O'
+  elsif array[0][2] == COMPUTER_O && array[0][1] == COMPUTER_O
     num = 1
-  elsif array[1][2] == 'O' && array[1][1] == 'O'
+  elsif array[1][2] == COMPUTER_O && array[1][1] == COMPUTER_O
     num = 4
-  elsif array[2][2] == 'O' && array[2][1] == 'O'
+  elsif array[2][2] == COMPUTER_O && array[2][1] == COMPUTER_O
     num = 7
   end
   num
@@ -165,17 +129,17 @@ end
 
 def check_offense_columns(array)
   num = false
-  if array[0][0] == 'O' && array[1][0] == 'O'
+  if array[0][0] == COMPUTER_O && array[1][0] == COMPUTER_O
     num = 7
-  elsif array[0][1] == 'O' && array[1][1] == 'O'
+  elsif array[0][1] == COMPUTER_O && array[1][1] == COMPUTER_O
     num = 8
-  elsif array[0][2] == 'O' && array[1][2] == 'O'
+  elsif array[0][2] == COMPUTER_O && array[1][2] == COMPUTER_O
     num = 9
-  elsif array[2][0] == 'O' && array[1][0] == 'O'
+  elsif array[2][0] == COMPUTER_O && array[1][0] == COMPUTER_O
     num = 1
-  elsif array[2][1] == 'O' && array[1][1] == 'O'
+  elsif array[2][1] == COMPUTER_O && array[1][1] == COMPUTER_O
     num = 2
-  elsif array[2][2] == 'O' && array[1][2] == 'O'
+  elsif array[2][2] == COMPUTER_O && array[1][2] == COMPUTER_O
     num = 3
   end
   num
@@ -186,14 +150,12 @@ def check_defenses(array)
   return check_defense_columns(array) if check_defense_columns(array)
   return check_defense_center(array) if check_defense_center(array)
   return check_defense_corners(array) if check_defense_corners(array)
-  return check_defense_opp_edges(array) if check_defense_opp_edges(array)
   false
 end
 
 def check_offenses(array)
   return check_offense_center(array) if check_offense_center(array)
   return check_offense_corners(array) if check_offense_corners(array)
-  return check_offense_opp_edges(array) if check_offense_opp_edges(array)
   return check_offense_rows(array) if check_offense_rows(array)
   return check_offense_columns(array) if check_offense_columns(array)
   false
@@ -206,16 +168,12 @@ def strategic_move_calculator(array)
 end
 
 def update_grid(choice, array, user_boolean)
-  times = 0
-  array.each do |sub_array|
-    index = 0
-    sub_array.each do |item|
+  array.each_with_index do |sub_array, sub_i|
+    sub_array.each_with_index do |item, item_i|
       if choice == item
-        array[times][index] = user_boolean ? "X" : "O"
+        array[sub_i][item_i] = user_boolean ? USER_X : COMPUTER_O
       end
-      index += 1
     end
-    times += 1
   end
   array
 end
@@ -250,25 +208,57 @@ def print_after_update(array)
   display_grid(array)
 end
 
+def print_scores(player_score, computer_score)
+  puts "Player Won: #{player_score}"
+  puts "Computer Won: #{computer_score}"
+end
+
+def determine_first_turn
+  boolean = false
+  if FIRST_TURN == "computer"
+    boolean = true
+  elsif FIRST_TURN == "choose"
+    choice = ""
+    loop do
+      puts
+      print "Who would you like to go first? (player or computer) >>> "
+      choice = gets.chomp
+      break if choice == "player" || choice == "computer"
+
+      puts "I'm sorry. I didn't understand..."
+    end
+    boolean = choice == "computer" ? true : false
+  elsif FIRST_TURN == "player"
+    boolean = false
+  end
+  boolean
+end
+
 grid_array = [[1, 2, 3],
               [4, 5, 6],
               [7, 8, 9]]
 
 print_after_update(grid_array)
+after_user = false
+player_score = 0
+computer_score = 0
+after_user = determine_first_turn
 
 loop do
   user_choice = 0
-  after_user = false
-  loop do
-    puts
-    puts "Which square do you want?"
-    print ">>> "
-    user_choice = gets.chomp.to_i
-    if grid_array.flatten.include?(user_choice)
-      after_user = true
-      break
+  if after_user == false
+    loop do
+      break if board_full?(grid_array)
+      puts
+      puts "Which square do you want?"
+      print ">>> "
+      user_choice = gets.chomp.to_i
+      if grid_array.flatten.include?(user_choice)
+        after_user = true
+        break
+      end
+      puts "I'm sorry. I didn't understand..."
     end
-    puts "I'm sorry. I didn't understand..."
   end
 
   grid_array = update_grid(user_choice, grid_array, after_user)
@@ -277,7 +267,7 @@ loop do
   puts "...Thinking..."
   sleep(1.3)
 
-  if !winner?(grid_array, "X")
+  if !winner?(grid_array, "X") && after_user == true
     computer_choice = 0
     loop do
       break if board_full?(grid_array)
@@ -304,14 +294,30 @@ loop do
   if winner?(grid_array, "X")
     puts
     puts "CONGRATULATIONS!! You won!"
+    player_score += 1
+    print_scores(player_score, computer_score)
   elsif winner?(grid_array, "O")
     puts
-    puts "Better luck next time!! Computer won!"
+    puts "GAME OVER!! Computer won!"
+    computer_score += 1
+    print_scores(player_score, computer_score)
   elsif board_full?(grid_array)
     puts
     puts "What a match!! It's a tie!"
+    print_scores(player_score, computer_score)
   else
     next
+  end
+
+  if player_score == 3
+    puts "You've won too many games!! I quit."
+    puts
+    break
+
+  elsif computer_score == 3
+    puts "I'm exhausted from all that winning!! See you next time."
+    puts
+    break
   end
 
   again = ""
@@ -331,5 +337,6 @@ loop do
                   [4, 5, 6],
                   [7, 8, 9]]
     print_after_update(grid_array)
+    after_user = determine_first_turn
   end
 end
