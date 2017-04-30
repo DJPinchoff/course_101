@@ -1,6 +1,8 @@
 WELCOME = "  WELCOME TO TIC-TAC-TOE! "
 TOP_OF_GRID = "         |       |"
 BOT_OF_GRID = "  _______|_______|_______"
+PLAYER_X = "X"
+COMPUTER_O = "O"
 
 def middle_of_grid(index, array)
   "     #{array[index][0]}   |   #{array[index][1]}   |   #{array[index][2]}"
@@ -23,18 +25,14 @@ def display_grid(grid_array)
 end
 
 def board_full?(array)
-  answer = true
-  answer = false if array.flatten.any? do |item|
-    [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(item)
-  end
-  answer
+  !array.flatten.any? { |item| [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(item) }
 end
 
 def update_grid_array(choice, array, user_boolean)
   array.each_with_index do |sub_array, sub_i|
     sub_array.each_with_index do |item, item_i|
       if choice == item
-        array[sub_i][item_i] = user_boolean ? "X" : "O"
+        array[sub_i][item_i] = user_boolean ? PLAYER_X : COMPUTER_O
       end
     end
   end
@@ -52,20 +50,20 @@ def horizontal?(array, x_or_o)
     array[2].all? { |item| item == x_or_o }
 end
 
+def column(array, num)
+  [array[0][num], array[1][num], array[2][num]]
+end
+
 def vertical?(array, x_or_o)
-  [array[0][0], array[1][0], array[2][0]].all? { |item| item == x_or_o } ||
-    [array[0][1], array[1][1], array[2][1]].all? { |item| item == x_or_o } ||
-    [array[0][2], array[1][2], array[2][2]].all? { |item| item == x_or_o }
+  column(array, 0).all? { |item| item == x_or_o } ||
+    column(array, 1).all? { |item| item == x_or_o } ||
+    column(array, 2).all? { |item| item == x_or_o }
 end
 
 def winner?(array, x_or_o)
-  winner = false
-  if horizontal?(array, x_or_o) ||
-     vertical?(array, x_or_o) ||
-     diagonal?(array, x_or_o)
-    winner = true
-  end
-  winner
+  horizontal?(array, x_or_o) ||
+    vertical?(array, x_or_o) ||
+    diagonal?(array, x_or_o)
 end
 
 def print_after_update(array)
@@ -102,7 +100,7 @@ loop do
   puts "...Thinking..."
   sleep(1.3)
 
-  if !winner?(grid_array, "X")
+  if !winner?(grid_array, PLAYER_X)
     computer_choice = 0
     loop do
       break if board_full?(grid_array)
@@ -116,12 +114,12 @@ loop do
     end
   end
 
-  if winner?(grid_array, "X")
+  if winner?(grid_array, PLAYER_X)
     puts
     puts "CONGRATULATIONS!! You won!"
-  elsif winner?(grid_array, "O")
+  elsif winner?(grid_array, COMPUTER_O)
     puts
-    puts "Better luck next time!! Computer won!"
+    puts "GAME OVER!! Computer won!"
   elsif board_full?(grid_array)
     puts
     puts "What a match!! It's a tie!"
@@ -138,13 +136,15 @@ loop do
   end
 
   if again == 'n'
-    puts "Thanks for playing! Goodbye."
+    puts "Thanks for playing! GOODBYE"
     puts
     break
+
   else
     grid_array = [[1, 2, 3],
                   [4, 5, 6],
                   [7, 8, 9]]
+
     print_after_update(grid_array)
   end
 end
