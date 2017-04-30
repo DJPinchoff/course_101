@@ -258,10 +258,10 @@ loop do
       end
       puts "I'm sorry. I didn't understand..."
     end
-  end
-
   grid_array = update_grid(user_choice, grid_array, post_user_turn)
   print_after_update(grid_array)
+  end
+
   puts "...Thinking..."
   sleep(1.5)
 
