@@ -2,26 +2,11 @@ WELCOME = "  WELCOME TO TIC-TAC-TOE! "
 TOP_OF_GRID = "         |       |"
 BOT_OF_GRID = "  _______|_______|_______"
 USER_X = 'X'
-COMPUTER_O = 'O'
-FIRST_TURN = 'choose' # Can be 'player', 'computer', or 'choose'
+COMP_O = 'O'
+FIRST_TURN = 'choose' # Can be set to 'player', 'computer', or 'choose'
 
 def middle_of_grid(index, array)
   "     #{array[index][0]}   |   #{array[index][1]}   |   #{array[index][2]}"
-end
-
-def clear_screen
-  system('clear') || system('cls')
-end
-
-def update_grid(choice, array, user_boolean)
-  array.each_with_index do |sub_array, sub_i|
-    sub_array.each_with_index do |item, item_i|
-      if choice == item
-        array[sub_i][item_i] = user_boolean ? USER_X : COMPUTER_O
-      end
-    end
-  end
-  array
 end
 
 def display_grid(grid_array)
@@ -37,6 +22,21 @@ def display_grid(grid_array)
   puts
 end
 
+def clear_screen
+  system('clear') || system('cls')
+end
+
+def update_grid(choice, array, post_user_turn)
+  array.each_with_index do |sub_array, sub_i|
+    sub_array.each_with_index do |item, item_i|
+      if choice == item
+        array[sub_i][item_i] = post_user_turn ? USER_X : COMP_O
+      end
+    end
+  end
+  array
+end
+
 def board_full?(array)
   !array.flatten.any? { |item| [1, 2, 3, 4, 5, 6, 7, 8, 9].include?(item) }
 end
@@ -48,129 +48,113 @@ def strategic_move_calculator(array)
 end
 
 def check_offenses(array)
-  return check_offense_diagonals(array) if check_offense_diagonals(array)
-  return check_offense_rows(array) if check_offense_rows(array)
-  return check_offense_columns(array) if check_offense_columns(array)
-  # Methods to check gaps could be added (ex 1 and 3 are O's.. move = 2)
+  return check_diagonals(array, COMP_O) if check_diagonals(array, COMP_O)
+  return check_rows(array, COMP_O) if check_rows(array, COMP_O)
+  return check_columns(array, COMP_O) if check_columns(array, COMP_O)
+  return check_gaps(array, COMP_O) if check_gaps(array, COMP_O)
   false
 end
 
 def check_defenses(array)
-  return check_defense_diagonals(array) if check_defense_diagonals(array)
-  return check_defense_rows(array) if check_defense_rows(array)
-  return check_defense_columns(array) if check_defense_columns(array)
-  # Methods to check gaps could be added (ex 1 and 3 are X's.. move = 2)
+  return check_diagonals(array, USER_X) if check_diagonals(array, USER_X)
+  return check_rows(array, USER_X) if check_rows(array, USER_X)
+  return check_columns(array, USER_X) if check_columns(array, USER_X)
+  return check_gaps(array, USER_X) if check_gaps(array, USER_X)
   false
 end
 
-def check_defense_diagonals(array)
+def check_gaps(array, marker)
+  return check_row_gaps(array, marker) if check_row_gaps(array, marker)
+  return check_column_gaps(array, marker) if check_column_gaps(array, marker)
+  return check_diag_gaps(array, marker) if check_diag_gaps(array, marker)
+end
+
+def check_row_gaps(array, marker)
+  return row_gap(array, marker, 0) if row_gap(array, marker, 0)
+  return row_gap(array, marker, 1) if row_gap(array, marker, 1)
+  return row_gap(array, marker, 2) if row_gap(array, marker, 2)
+end
+
+def row_gap(array, marker, row)
+  if array[row][0] == marker && array[row][2] == marker
+    return 2 if row == 0
+    return 5 if row == 1
+    return 8 if row == 2
+  end
+end
+
+def check_column_gaps(array, marker)
+  return column_gap(array, marker, 0) if column_gap(array, marker, 0)
+  return column_gap(array, marker, 1) if column_gap(array, marker, 1)
+  return column_gap(array, marker, 2) if column_gap(array, marker, 2)
+end
+
+def column_gap(array, marker, col)
+  if array[0][col] == marker && array[2][col] == marker
+    return 4 if col == 0
+    return 5 if col == 1
+    return 6 if col == 2
+  end
+end
+
+def check_diag_gaps(array, marker)
+  if (array[0][0] == marker && array[2][2] == marker) ||
+     (array[0][2] == marker && array[2][0] == marker)
+    5
+  end
+end
+
+def check_diagonals(array, marker)
   num = false
-  if array[1][1] == USER_X
-    num = 1 if array[2][2] == USER_X
-    num = 3 if array[2][0] == USER_X
-    num = 7 if array[0][2] == USER_X
-    num = 9 if array[0][0] == USER_X
+  if array[1][1] == marker
+    num = 1 if array[2][2] == marker
+    num = 3 if array[2][0] == marker
+    num = 7 if array[0][2] == marker
+    num = 9 if array[0][0] == marker
   end
   num
 end
 
-def check_defense_rows(array)
-  return check_defense_row1(array) if check_defense_row1(array)
-  return check_defense_row2(array) if check_defense_row2(array)
-  return check_defense_row3(array) if check_defense_row3(array)
-  false
+def check_rows(array, marker)
+  return check_row1(array, marker) if check_row1(array, marker)
+  return check_row2(array, marker) if check_row2(array, marker)
+  return check_row3(array, marker) if check_row3(array, marker)
 end
 
-def check_defense_row1(array)
-  return 1 if array[0][1] == USER_X && array[0][2] == USER_X
-  return 3 if array[0][0] == USER_X && array[0][1] == USER_X
+def check_row1(array, marker)
+  return 1 if array[0][1] == marker && array[0][2] == marker
+  return 3 if array[0][0] == marker && array[0][1] == marker
 end
 
-def check_defense_row2(array)
-  return 4 if array[1][1] == USER_X && array[1][2] == USER_X
-  return 6 if array[1][0] == USER_X && array[1][1] == USER_X
+def check_row2(array, marker)
+  return 4 if array[1][1] == marker && array[1][2] == marker
+  return 6 if array[1][0] == marker && array[1][1] == marker
 end
 
-def check_defense_row3(array)
-  return 7 if array[2][1] == USER_X && array[2][2] == USER_X
-  return 9 if array[2][0] == USER_X && array[2][1] == USER_X
+def check_row3(array, marker)
+  return 7 if array[2][1] == marker && array[2][2] == marker
+  return 9 if array[2][0] == marker && array[2][1] == marker
 end
 
-def check_defense_columns(array)
-  return check_defense_column1(array) if check_defense_column1(array)
-  return check_defense_column2(array) if check_defense_column2(array)
-  return check_defense_column2(array) if check_defense_column3(array)
-  false
+def check_columns(array, marker)
+  return check_column1(array, marker) if check_column1(array, marker)
+  return check_column2(array, marker) if check_column2(array, marker)
+  return check_column2(array, marker) if check_column3(array, marker)
 end
 
-def check_defense_column1(array)
-  return 1 if array[1][0] == USER_X && array[2][0] == USER_X
-  return 7 if array[0][0] == USER_X && array[1][0] == USER_X
+def check_column1(array, marker)
+  return 1 if array[1][0] == marker && array[2][0] == marker
+  return 7 if array[0][0] == marker && array[1][0] == marker
 end
 
-def check_defense_column2(array)
-  return 2 if array[1][1] == USER_X && array[2][1] == USER_X
-  return 8 if array[0][1] == USER_X && array[1][1] == USER_X
+def check_column2(array, marker)
+  return 2 if array[1][1] == marker && array[2][1] == marker
+  return 8 if array[0][1] == marker && array[1][1] == marker
 end
 
-def check_defense_column3(array)
-  return 3 if array[1][2] == USER_X && array[2][2] == USER_X
-  return 9 if array[0][2] == USER_X && array[1][2] == USER_X
-end
-
-def check_offense_diagonals(array)
-  num = false
-  if array[1][1] == COMPUTER_O
-    num = 1 if array[2][2] == COMPUTER_O
-    num = 3 if array[2][0] == COMPUTER_O
-    num = 7 if array[0][2] == COMPUTER_O
-    num = 9 if array[0][0] == COMPUTER_O
-  end
-  num
-end
-
-def check_offense_rows(array)
-  return check_offense_row1(array) if check_offense_row1(array)
-  return check_offense_row2(array) if check_offense_row2(array)
-  return check_offense_row3(array) if check_offense_row3(array)
-  false
-end
-
-def check_offense_row1(array)
-  return 1 if array[0][1] == COMPUTER_O && array[0][2] == COMPUTER_O
-  return 3 if array[0][0] == COMPUTER_O && array[0][1] == COMPUTER_O
-end
-
-def check_offense_row2(array)
-  return 4 if array[1][1] == COMPUTER_O && array[1][2] == COMPUTER_O
-  return 6 if array[1][0] == COMPUTER_O && array[1][1] == COMPUTER_O
-end
-
-def check_offense_row3(array)
-  return 7 if array[2][1] == COMPUTER_O && array[2][2] == COMPUTER_O
-  return 9 if array[2][0] == COMPUTER_O && array[2][1] == COMPUTER_O
-end
-
-def check_offense_columns(array)
-  return check_offense_column1(array) if check_offense_column1(array)
-  return check_offense_column2(array) if check_offense_column2(array)
-  return check_offense_column2(array) if check_offense_column3(array)
-  false
-end
-
-def check_offense_column1(array)
-  return 1 if array[1][0] == COMPUTER_O && array[2][0] == COMPUTER_O
-  return 7 if array[0][0] == COMPUTER_O && array[1][0] == COMPUTER_O
-end
-
-def check_offense_column2(array)
-  return 2 if array[1][1] == COMPUTER_O && array[2][1] == COMPUTER_O
-  return 8 if array[0][1] == COMPUTER_O && array[1][1] == COMPUTER_O
-end
-
-def check_offense_column3(array)
-  return 3 if array[1][2] == COMPUTER_O && array[2][2] == COMPUTER_O
-  return 9 if array[0][2] == COMPUTER_O && array[1][2] == COMPUTER_O
+def check_column3(array, marker)
+  return 3 if array[1][2] == marker && array[2][2] == marker
+  return 9 if array[0][2] == marker && array[1][2] == marker
 end
 
 def diagonal_win?(array, x_or_o)
@@ -212,14 +196,7 @@ def print_scores(player_score, computer_score)
   puts "Computer Won: #{computer_score}"
 end
 
-def determine_first_turn
-  post_user_turn_boolean = false
-  post_user_turn_boolean = true if FIRST_TURN == "computer"
-  post_user_turn_boolean = first_turn_choice if FIRST_TURN == "choose"
-  post_user_turn_boolean
-end
-
-def first_turn_choice
+def first_turn_choice(array)
   choice = ""
   loop do
     puts "Choose who you would like to go first:"
@@ -227,11 +204,13 @@ def first_turn_choice
     puts "2) Computer"
     puts "3) Random Choice"
     print ">>> "
-    choice = gets.chomp.downcase
-    break if choice == "1" || choice == "2" || choice == "3"
+    choice = gets.chomp.to_i
+    break if choice == 1 || choice == 2 || choice == 3
 
     puts "I'm sorry. I didn't understand..."
+    puts
   end
+  print_after_update(array)
   choice_method(choice)
 end
 
@@ -246,15 +225,24 @@ def choice_method(choice)
   end
 end
 
+def determine_first_turn(array)
+  if FIRST_TURN == 'player'
+    false
+  elsif FIRST_TURN == 'computer'
+    true
+  else
+    first_turn_choice(array)
+  end
+end
+
 grid_array = [[1, 2, 3],
               [4, 5, 6],
               [7, 8, 9]]
 
 print_after_update(grid_array)
-post_user_turn = false
+post_user_turn = determine_first_turn(grid_array)
 player_score = 0
 computer_score = 0
-post_user_turn = determine_first_turn
 
 loop do
   user_choice = 0
@@ -307,7 +295,7 @@ loop do
     puts "CONGRATULATIONS!! You won!"
     player_score += 1
     print_scores(player_score, computer_score)
-  elsif winner?(grid_array, COMPUTER_O)
+  elsif winner?(grid_array, COMP_O)
     puts
     puts "GAME OVER!! Computer won!"
     computer_score += 1
@@ -350,6 +338,6 @@ loop do
                   [4, 5, 6],
                   [7, 8, 9]]
     print_after_update(grid_array)
-    post_user_turn = determine_first_turn
+    post_user_turn = determine_first_turn(grid_array)
   end
 end
