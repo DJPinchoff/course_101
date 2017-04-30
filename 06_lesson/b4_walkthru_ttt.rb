@@ -1,4 +1,3 @@
-require 'pry'
 WELCOME = "  WELCOME TO TIC-TAC-TOE! "
 TOP_OF_GRID = "         |       |"
 BOT_OF_GRID = "  _______|_______|_______"
@@ -32,16 +31,12 @@ def board_full?(array)
 end
 
 def update_grid_array(choice, array, user_boolean)
-  times = 0
-  array.each do |sub_array|
-    index = 0
-    sub_array.each do |item|
+  array.each_with_index do |sub_array, sub_i|
+    sub_array.each_with_index do |item, item_i|
       if choice == item
-        array[times][index] = user_boolean ? "X" : "O"
+        array[sub_i][item_i] = user_boolean ? "X" : "O"
       end
-      index += 1
     end
-    times += 1
   end
   array
 end
