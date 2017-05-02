@@ -294,19 +294,18 @@ loop do
     puts
     puts "CONGRATULATIONS!! You won!"
     player_score += 1
-    print_scores(player_score, computer_score)
   elsif winner?(grid_array, COMP_O)
     puts
-    puts "GAME OVER!! Computer won!"
+    puts "YOU LOST!! Computer won!"
     computer_score += 1
-    print_scores(player_score, computer_score)
   elsif board_full?(grid_array)
     puts
-    puts "What a match!! It's a tie!"
-    print_scores(player_score, computer_score)
+    puts "WHAT A MATCH!! It's a tie!"
   else
     next
   end
+
+  print_scores(player_score, computer_score)
 
   if player_score == 3
     puts "You won best 3 out of 5!! Let's start a new game!"
