@@ -151,8 +151,8 @@ def card_name(card)
   "#{card[:value_name]} of #{card[:suit]} (#{value})"
 end
 
-def display_card_names(card_array, token)
-  puts "#{token} Cards: "
+def display_card_names(card_array, user)
+  puts "#{user} Cards: "
   card_name_array = card_array.map { |card| card_name(card) }
   puts joinor(card_name_array, ",", "and")
 end
@@ -210,13 +210,10 @@ def display_dealing_delay_effect
   puts
 end
 
-def display_updated_screen(_deck, dealer_cards, player_cards, turn)
+def display_updated_screen(dealer_cards, player_cards, turn)
   clear_screen
   puts WELCOME
   puts GOAL
-  # Include next 2 lines and deck parameter to help with card counting in game:
-  # cards_left = deck.values.count { |card| card[:present] == true }
-  # puts "#{cards_left} Cards Left In Deck"
   puts
 
   display_dealer_showing(dealer_cards) if turn == PLAYER
@@ -285,12 +282,12 @@ loop do # main loop
   2.times do
     deal!(player_cards, deck)
     deal!(dealer_cards, deck)
-    display_updated_screen(deck, dealer_cards, player_cards, INITIAL_DEAL)
+    display_updated_screen(dealer_cards, player_cards, INITIAL_DEAL)
     display_dealing_delay_effect
   end
 
   loop do # Player's turn
-    display_updated_screen(deck, dealer_cards, player_cards, PLAYER)
+    display_updated_screen(dealer_cards, player_cards, PLAYER)
     choice = player_choice
     break if choice == 's' # stay
 
@@ -299,12 +296,12 @@ loop do # main loop
   end
 
   if busted?(player_cards)
-    display_updated_screen(deck, dealer_cards, player_cards, PLAYER)
+    display_updated_screen(dealer_cards, player_cards, PLAYER)
     puts PLAYER_BUSTED
     dealer_wins += 1
   else
     loop do # Dealer's turn
-      display_updated_screen(deck, dealer_cards, player_cards, DEALER)
+      display_updated_screen(dealer_cards, player_cards, DEALER)
       break if hand_total(dealer_cards) >= DEALER_STAYS # stay without thinking
 
       display_dealing_delay_effect
@@ -313,7 +310,7 @@ loop do # main loop
     end
 
     # Dealer has now stayed or busted:
-    display_updated_screen(deck, dealer_cards, player_cards, DEALER)
+    display_updated_screen(dealer_cards, player_cards, DEALER)
     if busted?(dealer_cards)
       puts DEALER_BUSTED
       player_wins += 1
