@@ -8,11 +8,11 @@ INITIAL_DEAL = " "
 WELCOME = "    WELCOME TO #{GAME_TITLE}!"
 ROUNDS = 5 # Number of Rounds to win the match
 GOAL = "Win #{ROUNDS} Rounds Before the Dealer"
-PLAYER_WIN = "CONGRATULATIONS!! You win."
-DEALER_WIN = "BETTER LUCK NEXT TIME!! Dealer wins."
+PLAYER_WIN = "CONGRATULATIONS! You win."
+DEALER_WIN = "BETTER LUCK NEXT TIME! Dealer wins."
 DEALER_BUSTED = "DEALER BUSTED! You win."
 PLAYER_BUSTED = "YOU BUSTED! Dealer wins."
-TIE = "IT'S A TIE!! Nothing ventured, nothing gained."
+TIE = "IT'S A TIE! Nothing ventured, nothing gained."
 DECK = { 1 => { value: 1, value_name: "Ace",
                 suit: "Clubs", present: true },
          2 => { value: 2, value_name: "Two",
@@ -272,6 +272,13 @@ end
 deck = DECK
 player_wins = 0
 dealer_wins = 0
+
+clear_screen
+puts WELCOME
+puts GOAL
+puts
+puts "Press ENTER to play!"
+gets
 
 loop do # main loop
   deck.values.each { |card| card[:present] = true }
